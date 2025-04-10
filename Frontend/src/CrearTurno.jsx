@@ -57,7 +57,10 @@ const CrearTurno = () => {
       setCargando(false);
       if (response.status === 201) {
         setMensaje(`Turno agregado exitosamente para ${response.data.turno.nombre}`);
-        setTimeout(() => setMensaje(""), 2000);
+        setTimeout(() => {
+          setMensaje(""),
+          handleVolver();
+        }, 2000);
       } else {
         setMensaje('Hubo un problema al agregar el turno');
       }
@@ -183,9 +186,8 @@ const CrearTurno = () => {
         {(tipo && (tipo === 'reclamo' || area)) && (
           <button
             type="submit"
-            className={`w-full p-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg text-lg font-medium transition-all duration-300 hover:from-blue-700 hover:to-blue-800 ${
-              cargando ? 'opacity-50 cursor-not-allowed' : 'transform hover:-translate-y-1'
-            } shadow-md flex items-center justify-center`}
+            className={`w-full p-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg text-lg font-medium transition-all duration-300 hover:from-blue-700 hover:to-blue-800 ${cargando ? 'opacity-50 cursor-not-allowed' : 'transform hover:-translate-y-1'
+              } shadow-md flex items-center justify-center`}
             disabled={cargando}
           >
             {cargando ? (
