@@ -5,7 +5,7 @@ const Turnero = () => {
   const [turnos, setTurnos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const url = "https://turnero-pi.vercel.app/";
+  const url = "https://turnero-pi.vercel.app";
   useEffect(() => {
     const fetchTurnos = async () => {
       try {

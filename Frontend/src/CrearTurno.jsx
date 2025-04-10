@@ -7,7 +7,7 @@ const CrearTurno = () => {
   const [mensaje, setMensaje] = useState('');
   const [cargando, setCargando] = useState(false);
   const navigate = useNavigate(); 
-  const url = "https://turnero-pi.vercel.app/";
+  const url = "https://turnero-pi.vercel.app";
   // Función para obtener la fecha actual en formato DD/MM/YYYY
   const obtenerFechaActual = () => {
     const fechaActual = new Date();
