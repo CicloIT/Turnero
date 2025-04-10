@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const CrearTurno = () => {
@@ -8,7 +7,6 @@ const CrearTurno = () => {
   const [area, setArea] = useState('');
   const [mensaje, setMensaje] = useState('');
   const [cargando, setCargando] = useState(false);
-  const navigate = useNavigate();
   const url = "https://turnero-pi.vercel.app";
 
   // Función para obtener la fecha y hora actual
