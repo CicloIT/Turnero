@@ -15,7 +15,7 @@ const PORT = 8000;
 // Configuración de CORS
 app.use(cors());
 app.use(bodyParser.json());
-
+/*
 // Ruta para obtener los turnos
 app.get('/api/turnos', (req, res) => {
   const filePath = path.join(__dirname, 'data', 'turnos.json');
@@ -238,4 +238,84 @@ app.delete('/api/turnos/eliminar/:id', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
+*/
+let turnos = []; // Se guardan en memoria
+
+// GET: obtener todos los turnos
+app.get('/api/turnos', (req, res) => {
+  return res.json(turnos);
+});
+
+// POST: agregar nuevo turno
+app.post('/api/turnos', (req, res) => {
+  const nuevoTurno = req.body;
+
+  if (!nuevoTurno.nombre) {
+    return res.status(400).json({ message: 'Se requiere nombre para el turno' });
+  }
+
+  const fechaActual = new Date();
+
+  if (!nuevoTurno.fecha) {
+    const dia = fechaActual.getDate().toString().padStart(2, '0');
+    const mes = (fechaActual.getMonth() + 1).toString().padStart(2, '0');
+    const anio = fechaActual.getFullYear();
+    nuevoTurno.fecha = `${dia}/${mes}/${anio}`;
+  }
+
+  if (!nuevoTurno.hora) {
+    const hora = fechaActual.getHours().toString().padStart(2, '0');
+    const minutos = fechaActual.getMinutes().toString().padStart(2, '0');
+    nuevoTurno.hora = `${hora}:${minutos}`;
+  }
+
+  nuevoTurno.estado = 'en espera';
+  nuevoTurno.id = `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+  turnos.push(nuevoTurno);
+
+  console.log('Turno añadido:', nuevoTurno);
+
+  return res.status(201).json({ message: 'Turno agregado exitosamente', turno: nuevoTurno });
+});
+
+// PUT: actualizar estado
+app.put('/api/turnos/:id/estado', (req, res) => {
+  const turnoId = req.params.id;
+  const { estado } = req.body;
+
+  if (!estado || !['en espera', 'atendiendo', 'atendido'].includes(estado)) {
+    return res.status(400).json({ message: 'Estado inválido' });
+  }
+
+  const index = turnos.findIndex(turno => turno.id === turnoId);
+  if (index === -1) {
+    return res.status(404).json({ message: 'Turno no encontrado' });
+  }
+
+  turnos[index].estado = estado;
+
+  if (estado === 'atendiendo') {
+    turnos[index].horaInicio = new Date().toLocaleTimeString();
+  } else if (estado === 'atendido') {
+    turnos[index].horaFin = new Date().toLocaleTimeString();
+  }
+
+  return res.status(200).json({ message: 'Estado actualizado', turno: turnos[index] });
+});
+
+// DELETE: eliminar turno
+app.delete('/api/turnos/eliminar/:id', (req, res) => {
+  const turnoId = req.params.id;
+  const index = turnos.findIndex(turno => turno.id === turnoId);
+  if (index === -1) {
+    return res.status(404).json({ message: 'Turno no encontrado' });
+  }
+
+  const eliminado = turnos.splice(index, 1)[0];
+  return res.status(200).json({ message: 'Turno eliminado', turno: eliminado });
+});
+
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
