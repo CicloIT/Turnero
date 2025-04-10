@@ -6,15 +6,11 @@
         "use": "@vercel/static-build"
       }
     ],
-    "routes": [
-      {
-        "src": "/ver",
-        "dest": "/build/index.html"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "/build/index.html"
-      }
-    ]
+    "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
   }
   
