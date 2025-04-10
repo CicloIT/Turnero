@@ -251,10 +251,13 @@ app.get('/api/turnos', (req, res) => {
 app.post('/api/turnos', (req, res) => {
   const nuevoTurno = req.body;
 
-  if (!nuevoTurno.nombre) {
-    return res.status(400).json({ message: 'Se requiere nombre para el turno' });
+  if (!nuevoTurno.nombre || !nuevoTurno.tipo) {
+    return res.status(400).json({ message: 'Faltan datos requeridos' });
   }
 
+  if (nuevoTurno.tipo === 'compra' && !nuevoTurno.area) {
+    return res.status(400).json({ message: 'Falta área para el turno de compra' });
+  }
   const fechaActual = new Date();
 
   if (!nuevoTurno.fecha) {

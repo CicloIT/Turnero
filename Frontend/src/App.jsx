@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import CrearTurno from './CrearTurno'
 import Turnero from './Turnero'
 import './Tailwond.css'
+import TurneroCliente from './TurneroCliente'
 function App() {
   return (
     <BrowserRouter>
@@ -21,6 +22,7 @@ function App() {
           <Route path="/" element={<div>Bienvenido al sistema de turnos</div>} />
           <Route path="/crear" element={<CrearTurno />} />
           <Route path="/ver" element={<Turnero />} />
+          <Route path="/cliente" element={<TurneroCliente/>} />
         </Routes>
       </div>
     </BrowserRouter>
