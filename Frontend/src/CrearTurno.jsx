@@ -80,8 +80,8 @@ const CrearTurno = () => {
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Reservar un turno</h1>
 
       {mensaje && (
-        <div className="mb-6 p-4 rounded-lg bg-red-50 border-l-4 border-red-500">
-          <p className="text-red-700">{mensaje}</p>
+        <div className="mb-6 p-4 rounded-lg bg-red-50 border-l-4 border-green-500">
+          <p className="text-green-700">{mensaje}</p>
         </div>
       )}
 
