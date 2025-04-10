@@ -5,11 +5,11 @@ const Turnero = () => {
   const [turnos, setTurnos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const url = "https://turnero-pi.vercel.app/";
   useEffect(() => {
     const fetchTurnos = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/turnos');
+        const response = await axios.get(`${url}/api/turnos`);
         const data = response.data;
         console.log(data);
         setTurnos(data);
@@ -24,7 +24,7 @@ const Turnero = () => {
 
   const cambiarEstado = async (id, nuevoEstado) => {
     try {
-      const response = await axios.put(`http://localhost:8000/api/turnos/${id}/estado`, { estado: nuevoEstado });
+      const response = await axios.put(`${url}/api/turnos/${id}/estado`, { estado: nuevoEstado });
 
       // Actualizar la lista de turnos
       setTurnos(turnos.map(turno =>

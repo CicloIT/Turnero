@@ -7,6 +7,7 @@ const CrearTurno = () => {
   const [mensaje, setMensaje] = useState('');
   const [cargando, setCargando] = useState(false);
   const navigate = useNavigate(); 
+  const url = "https://turnero-pi.vercel.app/";
   // Función para obtener la fecha actual en formato DD/MM/YYYY
   const obtenerFechaActual = () => {
     const fechaActual = new Date();
@@ -33,7 +34,7 @@ const CrearTurno = () => {
     const turno = { nombre, fecha: obtenerFechaActual(),hora: obtenerHoraActual() };
 
     try {
-      const response = await axios.post('http://localhost:8000/api/turnos', turno);
+      const response = await axios.post(`${url}/api/turnos`, turno);
       setCargando(false);
       if (response.status === 201 ) {
         setMensaje(`Turno agregado exitosamente: ${response.data.turno.nombre} - ${response.data.turno.fecha}`);
